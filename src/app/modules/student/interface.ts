@@ -13,7 +13,6 @@ export type TLocalGuardian = {
   name: TName;
   relation: string;
   contactNo: string;
-  address: string;
 };
 export type TStudent = {
   id: string;

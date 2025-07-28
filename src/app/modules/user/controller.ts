@@ -3,9 +3,9 @@ import { StudentServices } from "./services";
 import { catchAsync } from "../../utils/catchAsync";
 
 const createStudent = catchAsync(async (req: Request, res: Response) => {
-  const studentData = req.body;
-  const result = await StudentServices.createStudentIntoDB(studentData);
-  res.status(201).json({
+  const { password, student } = req.body;
+  const result = await StudentServices.createStudentIntoDB(password, student);
+  res.status(200).json({
     success: true,
     message: "Student created successfully",
     data: result,

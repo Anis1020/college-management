@@ -29,7 +29,6 @@ const createStudentValidation = z.object({
       }),
       relation: z.string(),
       contactNo: z.string(),
-      address: z.string(),
     }),
     profileImage: z.string().optional(),
     academicDepartment: z.string(),

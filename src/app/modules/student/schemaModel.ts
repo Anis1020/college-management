@@ -1,6 +1,22 @@
 import { model, Schema } from "mongoose";
 import { TStudent } from "./interface";
 
+export const Guardian = {
+  name: {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+  },
+  relation: { type: String, required: true },
+  contactNo: { type: String, required: true },
+};
+export const LocalGuardian = {
+  name: {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+  },
+  relation: { type: String, required: true },
+  contactNo: { type: String, required: true },
+};
 const studentSchema = new Schema<TStudent>(
   {
     id: { type: String, required: true, unique: true },
@@ -15,24 +31,9 @@ const studentSchema = new Schema<TStudent>(
     contactNo: { type: String, required: true },
     presentAddress: { type: String, required: true },
     permanentAddress: { type: String, required: true },
-    guardian: {
-      name: {
-        firstName: { type: String, required: true },
-        lastName: { type: String, required: true },
-      },
-      relation: { type: String, required: true },
-      contactNo: { type: String, required: true },
-    },
-    localGuardian: {
-      name: {
-        firstName: { type: String, required: true },
-        lastName: { type: String, required: true },
-      },
-      relation: { type: String, required: true },
-      contactNo: { type: String, required: true },
-      address: { type: String, required: true },
-    },
-    profileImage: { type: String },
+    guardian: Guardian,
+    localGuardian: LocalGuardian,
+    profileImage: { type: String, optional: true },
     academicDepartment: {
       type: Schema.Types.ObjectId,
       ref: "Department",
