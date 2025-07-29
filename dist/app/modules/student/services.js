@@ -17,7 +17,8 @@ const getAllStudentsFromDB = () => __awaiter(void 0, void 0, void 0, function* (
     return result;
 });
 const getSingleStudentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield schemaModel_1.StudentModel.findById(id);
+    // const result = await StudentModel.findById(id);
+    const result = yield schemaModel_1.StudentModel.aggregate([{ $match: { id } }]);
     return result;
 });
 const updateStudentFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,8 +28,8 @@ const updateStudentFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, f
     return result;
 });
 const deleteStudentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const deletedUser = yield schemaModel_2.UserModel.deleteOne({ id });
-    const deleteStudent = yield schemaModel_1.StudentModel.deleteOne({ id });
+    const deletedUser = yield schemaModel_2.UserModel.updateOne({ id }, { isDeleted: true });
+    const deleteStudent = yield schemaModel_1.StudentModel.updateOne({ id }, { isDeleted: true });
     return {
         deletedUser,
         deleteStudent,

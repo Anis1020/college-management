@@ -9,7 +9,8 @@ const getAllStudentsFromDB = async () => {
 };
 
 const getSingleStudentFromDB = async (id: string) => {
-  const result = await StudentModel.findById(id);
+  // const result = await StudentModel.findById(id);
+  const result = await StudentModel.aggregate([{ $match: { id } }]);
   return result;
 };
 
@@ -21,8 +22,11 @@ const updateStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
 };
 
 const deleteStudentFromDB = async (id: string) => {
-  const deletedUser = await UserModel.deleteOne({ id });
-  const deleteStudent = await StudentModel.deleteOne({ id });
+  const deletedUser = await UserModel.updateOne({ id }, { isDeleted: true });
+  const deleteStudent = await StudentModel.updateOne(
+    { id },
+    { isDeleted: true }
+  );
   return {
     deletedUser,
     deleteStudent,

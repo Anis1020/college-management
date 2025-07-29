@@ -1,3 +1,5 @@
+import { Model } from "mongoose";
+
 export type TUser = {
   id: string;
   password: string;

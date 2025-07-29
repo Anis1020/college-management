@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generatedId = void 0;
 const schemaModel_1 = require("./schemaModel");
 const findLastStudent = () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("problem is here");
     const lastStudentId = yield schemaModel_1.UserModel.findOne({
         role: "student",
     }, {

@@ -13,7 +13,7 @@ const createStudentValidation = zod_1.default.object({
             firstName: zod_1.default.string(),
             lastName: zod_1.default.string(),
         }),
-        gender: zod_1.default.string(),
+        gender: zod_1.default.enum(["male", "female", "other"]),
         dateOfBirth: zod_1.default.string(),
         email: zod_1.default.string(),
         contactNo: zod_1.default.string(),
@@ -38,6 +38,7 @@ const createStudentValidation = zod_1.default.object({
         profileImage: zod_1.default.string().optional(),
         academicDepartment: zod_1.default.string(),
         admissionSemester: zod_1.default.string(),
+        isDeleted: zod_1.default.boolean(),
     }),
 });
 exports.StudentValidations = {

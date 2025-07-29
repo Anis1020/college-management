@@ -8,4 +8,5 @@ export const config = {
   port: process.env.PORT,
   dbUrl: process.env.DB_URL,
   jwtSecret: process.env.JWT_SECRET,
+  bcrypt_salt: process.env.BCRYPT_SALT,
 };

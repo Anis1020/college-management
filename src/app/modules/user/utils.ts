@@ -2,7 +2,6 @@ import { TSemester } from "../semester/interface";
 import { UserModel } from "./schemaModel";
 
 const findLastStudent = async () => {
-  console.log("problem is here");
   const lastStudentId = await UserModel.findOne(
     {
       role: "student",

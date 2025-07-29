@@ -8,7 +8,7 @@ const createStudentValidation = z.object({
       firstName: z.string(),
       lastName: z.string(),
     }),
-    gender: z.string(),
+    gender: z.enum(["male", "female", "other"]),
     dateOfBirth: z.string(),
     email: z.string(),
     contactNo: z.string(),
@@ -33,6 +33,7 @@ const createStudentValidation = z.object({
     profileImage: z.string().optional(),
     academicDepartment: z.string(),
     admissionSemester: z.string(),
+    isDeleted: z.boolean(),
   }),
 });
 

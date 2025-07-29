@@ -7,6 +7,10 @@ import { SemesterModel } from "../semester/schemaModel";
 import { generatedId } from "./utils";
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
+  if (await StudentModel.isUserExists(payload.id)) {
+    throw new Error("user already exist ");
+  }
+
   const userData: Partial<TUser> = {};
   userData.password = password;
   userData.role = "student";
@@ -18,6 +22,8 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     throw new Error("Admission semester not found");
   }
   userData.id = await generatedId(admissionSemester);
+
+  //checking is user already exist or not using mongoose statics methods
 
   const session = await mongoose.startSession();
   try {
@@ -34,7 +40,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error("Failed to create student");
+    throw new Error("Failed to create user and student");
   }
 };
 

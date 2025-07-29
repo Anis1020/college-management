@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { TStudent } from "./interface";
+import { TStudent, UserModelType } from "./interface";
 
 export const Guardian = {
   name: {
@@ -17,7 +17,7 @@ export const LocalGuardian = {
   relation: { type: String, required: true },
   contactNo: { type: String, required: true },
 };
-const studentSchema = new Schema<TStudent>(
+const studentSchema = new Schema<TStudent, UserModelType>(
   {
     id: { type: String, required: true, unique: true },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -44,10 +44,41 @@ const studentSchema = new Schema<TStudent>(
       ref: "Semester",
       required: true,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
 );
+//virtual
+studentSchema.virtual("fullName").get(function () {
+  return `${this.name.firstName} ${this.name.lastName}`;
+});
+studentSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await StudentModel.findOne({ id });
+  return existingUser;
+};
 
-export const StudentModel = model<TStudent>("Student", studentSchema);
+//skip which is update by isDeleted property
+studentSchema.pre("find", function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+studentSchema.pre("findOne", function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+studentSchema.pre("aggregate", function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: "$ne:true" } });
+  next();
+});
+export const StudentModel = model<TStudent, UserModelType>(
+  "Student",
+  studentSchema
+);

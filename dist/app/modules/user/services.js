@@ -19,6 +19,9 @@ const schemaModel_2 = require("./schemaModel");
 const schemaModel_3 = require("../semester/schemaModel");
 const utils_1 = require("./utils");
 const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    if (yield schemaModel_1.StudentModel.isUserExists(payload.id)) {
+        throw new Error("user already exist ");
+    }
     const userData = {};
     userData.password = password;
     userData.role = "student";
@@ -27,6 +30,7 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
         throw new Error("Admission semester not found");
     }
     userData.id = yield (0, utils_1.generatedId)(admissionSemester);
+    //checking is user already exist or not using mongoose statics methods
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
@@ -42,7 +46,7 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
     catch (error) {
         yield session.abortTransaction();
         yield session.endSession();
-        throw new Error("Failed to create student");
+        throw new Error("Failed to create user and student");
     }
 });
 exports.UserServices = {
