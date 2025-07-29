@@ -10,6 +10,7 @@ const globalErrorHandler = (
   res.status(500).json({
     success: false,
     message: "Internal Server Error",
+    error: err.message || "An unexpected error occurred",
   });
 };
 

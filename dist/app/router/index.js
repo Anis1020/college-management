@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const router_1 = require("../modules/user/router");
 const router_2 = require("../modules/student/router");
+const router_3 = require("../modules/semester/router");
 const router = (0, express_1.Router)();
 const routerProvider = [
     {
@@ -12,6 +13,10 @@ const routerProvider = [
     {
         path: "/students",
         route: router_2.StudentRouter,
+    },
+    {
+        path: "/semesters",
+        route: router_3.SemesterRouter,
     },
 ];
 routerProvider.forEach((route) => {

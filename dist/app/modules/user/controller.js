@@ -14,7 +14,7 @@ const services_1 = require("./services");
 const catchAsync_1 = require("../../utils/catchAsync");
 const createStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { password, student } = req.body;
-    const result = yield services_1.StudentServices.createStudentIntoDB(password, student);
+    const result = yield services_1.UserServices.createStudentIntoDB(password, student);
     res.status(200).json({
         success: true,
         message: "Student created successfully",

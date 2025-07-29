@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const router_1 = __importDefault(require("./app/router"));
-const globalError_1 = __importDefault(require("./app/modules/errors/globalError"));
-const notFount_1 = __importDefault(require("./app/modules/errors/notFount"));
+const globalError_1 = __importDefault(require("./app/errors/globalError"));
+const notFount_1 = __importDefault(require("./app/errors/notFount"));
 const app = (0, express_1.default)();
 //middleware
 app.use((0, cors_1.default)());

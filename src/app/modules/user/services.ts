@@ -3,12 +3,21 @@ import { TStudent } from "../student/interface";
 import { StudentModel } from "../student/schemaModel";
 import { TUser } from "./interface";
 import { UserModel } from "./schemaModel";
+import { SemesterModel } from "../semester/schemaModel";
+import { generatedId } from "./utils";
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   const userData: Partial<TUser> = {};
   userData.password = password;
   userData.role = "student";
-  userData.id = "studentId";
+
+  const admissionSemester = await SemesterModel.findById(
+    payload.admissionSemester
+  );
+  if (!admissionSemester) {
+    throw new Error("Admission semester not found");
+  }
+  userData.id = await generatedId(admissionSemester);
 
   const session = await mongoose.startSession();
   try {
@@ -29,6 +38,6 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   }
 };
 
-export const StudentServices = {
+export const UserServices = {
   createStudentIntoDB,
 };

@@ -12,15 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StudentServices = void 0;
+exports.UserServices = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const schemaModel_1 = require("../student/schemaModel");
 const schemaModel_2 = require("./schemaModel");
+const schemaModel_3 = require("../semester/schemaModel");
+const utils_1 = require("./utils");
 const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = {};
     userData.password = password;
     userData.role = "student";
-    userData.id = "studentId";
+    const admissionSemester = yield schemaModel_3.SemesterModel.findById(payload.admissionSemester);
+    if (!admissionSemester) {
+        throw new Error("Admission semester not found");
+    }
+    userData.id = yield (0, utils_1.generatedId)(admissionSemester);
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
@@ -39,6 +45,6 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
         throw new Error("Failed to create student");
     }
 });
-exports.StudentServices = {
+exports.UserServices = {
     createStudentIntoDB,
 };

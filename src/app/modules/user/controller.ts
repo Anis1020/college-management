@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { StudentServices } from "./services";
+import { UserServices } from "./services";
 import { catchAsync } from "../../utils/catchAsync";
 
 const createStudent = catchAsync(async (req: Request, res: Response) => {
   const { password, student } = req.body;
-  const result = await StudentServices.createStudentIntoDB(password, student);
+  const result = await UserServices.createStudentIntoDB(password, student);
   res.status(200).json({
     success: true,
     message: "Student created successfully",

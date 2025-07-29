@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import router from "./app/router";
-import globalErrorHandler from "./app/modules/errors/globalError";
-import notFound from "./app/modules/errors/notFount";
+import globalErrorHandler from "./app/errors/globalError";
+import notFound from "./app/errors/notFount";
 const app = express();
 
 //middleware

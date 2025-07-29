@@ -2,5 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentRouter = void 0;
 const express_1 = require("express");
+const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
+router.get("/", controller_1.StudentController.getAllStudent);
+router.get("/:id", controller_1.StudentController.getSingleStudent);
+router.patch("/:id", controller_1.StudentController.updateStudent);
+router.delete("/:id", controller_1.StudentController.deleteStudent);
 exports.StudentRouter = router;

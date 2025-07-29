@@ -1,26 +1,50 @@
 import { model, Schema } from "mongoose";
-import { TUser } from "./interface";
+import { TSemester } from "./interface";
 
-const userSchema = new Schema<TUser>(
+const Months = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
+
+const semesterSchema = new Schema<TSemester>(
   {
-    id: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    needPasswordChange: { type: Boolean, default: true },
-    role: {
+    name: {
       type: String,
-      enum: ["student", "faculty", "admin"],
       required: true,
     },
-    status: {
+    year: {
       type: String,
-      enum: ["in-progress", "blocked"],
-      default: "in-progress",
+      required: true,
     },
-    isDeleted: { type: Boolean, default: false },
+    code: {
+      type: String,
+      required: true,
+      enum: ["01", "02", "03", "04"],
+    },
+    startMonth: {
+      type: String,
+      required: true,
+      enum: Months,
+    },
+    endMonth: {
+      type: String,
+      required: true,
+      enum: Months,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export const UserModel = model<TUser>("User", userSchema);
+export const SemesterModel = model<TSemester>("Semester", semesterSchema);
