@@ -1,26 +1,13 @@
 import { model, Schema } from "mongoose";
 import { TSemester } from "./interface";
-
-const Months = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
-];
+import { SemesterCodes, SemesterMonths, SemesterNames } from "./constant";
 
 const semesterSchema = new Schema<TSemester>(
   {
     name: {
       type: String,
       required: true,
+      enum: SemesterNames,
     },
     year: {
       type: String,
@@ -29,22 +16,33 @@ const semesterSchema = new Schema<TSemester>(
     code: {
       type: String,
       required: true,
-      enum: ["01", "02", "03", "04"],
+      enum: SemesterCodes,
     },
     startMonth: {
       type: String,
       required: true,
-      enum: Months,
+      enum: SemesterMonths,
     },
     endMonth: {
       type: String,
       required: true,
-      enum: Months,
+      enum: SemesterMonths,
     },
   },
   {
     timestamps: true,
   }
 );
+
+semesterSchema.pre("save", async function (next) {
+  const isSemesterExist = await SemesterModel.findOne({
+    year: this.year,
+    name: this.name,
+  });
+  if (isSemesterExist) {
+    throw new Error("Semester is already exist");
+  }
+  next();
+});
 
 export const SemesterModel = model<TSemester>("Semester", semesterSchema);

@@ -21,6 +21,35 @@ const createSemester = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void
         data: result,
     });
 }));
+const getAllSemester = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield services_1.SemesterService.getAllSemesterFromDB();
+    res.status(200).json({
+        success: true,
+        message: "Semester get successfully",
+        data: result,
+    });
+}));
+const getSingleSemester = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield services_1.SemesterService.getSingleSemesterFromDB(id);
+    res.status(200).json({
+        success: true,
+        message: "Single Semester get successfully",
+        data: result,
+    });
+}));
+const updateSemester = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield services_1.SemesterService.updateSemesterFromDB(id, req.body);
+    res.status(200).json({
+        success: true,
+        message: "Update Semester  successfully",
+        data: result,
+    });
+}));
 exports.SemesterControllers = {
     createSemester,
+    getAllSemester,
+    getSingleSemester,
+    updateSemester,
 };

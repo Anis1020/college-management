@@ -33,6 +33,18 @@ const userSchema = new mongoose_1.Schema({
 }, {
     timestamps: true,
 });
+//check student already exist or not
+userSchema.pre("save", function (next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const isStudentExist = yield exports.UserModel.findOne({
+            id: this.id,
+        });
+        if (isStudentExist) {
+            throw new Error("student already exist");
+        }
+        next();
+    });
+});
 //something change before store in database-> password bcrypt
 userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {

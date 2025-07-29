@@ -6,10 +6,12 @@ const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  let statusCode = 500;
+  let message = err.message || "something went wrong";
   console.error(err.stack);
-  res.status(500).json({
+  res.status(statusCode).json({
     success: false,
-    message: "Internal Server Error",
+    message,
     error: err.message || "An unexpected error occurred",
   });
 };

@@ -11,11 +11,16 @@ export type TMonths =
   | "october"
   | "november"
   | "december";
-
+export type TName = "summer" | "fall" | "winter";
+export type TCode = "01" | "02" | "03";
 export type TSemester = {
-  name: string;
+  name: TName;
   year: string;
-  code: "01" | "02" | "03" | "04";
+  code: TCode;
   startMonth: TMonths;
   endMonth: TMonths;
+};
+
+export type TSemesterNameCodeMapper = {
+  [key: string]: string;
 };

@@ -5,14 +5,15 @@ import { TUser } from "./interface";
 import { UserModel } from "./schemaModel";
 import { SemesterModel } from "../semester/schemaModel";
 import { generatedId } from "./utils";
+import { config } from "../../config";
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
-  if (await StudentModel.isUserExists(payload.id)) {
-    throw new Error("user already exist ");
-  }
+  // if (await StudentModel.isUserExists(payload.id)) {
+  //   throw new Error("user already exist ");
+  // }
 
   const userData: Partial<TUser> = {};
-  userData.password = password;
+  userData.password = password || config.default_pass;
   userData.role = "student";
 
   const admissionSemester = await SemesterModel.findById(

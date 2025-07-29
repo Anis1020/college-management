@@ -29,7 +29,12 @@ exports.LocalGuardian = {
 };
 const studentSchema = new mongoose_1.Schema({
     id: { type: String, required: true, unique: true },
-    user: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        unique: true,
+    },
     name: {
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
@@ -43,11 +48,6 @@ const studentSchema = new mongoose_1.Schema({
     guardian: exports.Guardian,
     localGuardian: exports.LocalGuardian,
     profileImage: { type: String, optional: true },
-    academicDepartment: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Department",
-        required: true,
-    },
     admissionSemester: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Semester",

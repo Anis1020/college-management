@@ -18,12 +18,13 @@ const schemaModel_1 = require("../student/schemaModel");
 const schemaModel_2 = require("./schemaModel");
 const schemaModel_3 = require("../semester/schemaModel");
 const utils_1 = require("./utils");
+const config_1 = require("../../config");
 const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    if (yield schemaModel_1.StudentModel.isUserExists(payload.id)) {
-        throw new Error("user already exist ");
-    }
+    // if (await StudentModel.isUserExists(payload.id)) {
+    //   throw new Error("user already exist ");
+    // }
     const userData = {};
-    userData.password = password;
+    userData.password = password || config_1.config.default_pass;
     userData.role = "student";
     const admissionSemester = yield schemaModel_3.SemesterModel.findById(payload.admissionSemester);
     if (!admissionSemester) {
