@@ -45,7 +45,6 @@ const createStudentValidation = zod_1.default.object({
 });
 const updateStudentValidation = zod_1.default.object({
     body: zod_1.default.object({
-        password: zod_1.default.string().optional(),
         student: zod_1.default.object({
             id: zod_1.default.string().optional(),
             user: zod_1.default.string().optional(),

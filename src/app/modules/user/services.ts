@@ -6,6 +6,7 @@ import { UserModel } from "./schemaModel";
 import { SemesterModel } from "../semester/schemaModel";
 import { generatedId } from "./utils";
 import { config } from "../../config";
+import AppError from "../../errors/AppError";
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   //if data already exist then stop to create
@@ -33,10 +34,16 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     session.startTransaction();
 
     const newUser = await UserModel.create([userData], { session });
+    if (!newUser.length) {
+      throw new AppError(404, "fail to create user");
+    }
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
     // payload.email = newUser.email;
     const result = await StudentModel.create([payload], { session });
+    if (!result.length) {
+      throw new AppError(404, "fail to create user");
+    }
     await session.commitTransaction();
     await session.endSession();
     return result;

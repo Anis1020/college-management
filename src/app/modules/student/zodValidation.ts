@@ -41,7 +41,6 @@ const createStudentValidation = z.object({
 
 const updateStudentValidation = z.object({
   body: z.object({
-    password: z.string().optional(),
     student: z.object({
       id: z.string().optional(),
       user: z.string().optional(),

@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepartmentModel = void 0;
 const mongoose_1 = require("mongoose");
+const AppError_1 = __importDefault(require("../../errors/AppError"));
 const departmentSchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -31,7 +35,7 @@ departmentSchema.pre("save", function (next) {
             name: this.name,
         });
         if (isDepartmentExist) {
-            throw new Error("this department already exist");
+            throw new AppError_1.default(404, "this department already exist");
         }
         next();
     });

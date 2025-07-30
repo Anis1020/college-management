@@ -31,7 +31,8 @@ const getSingleStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(vo
 }));
 const updateStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield services_1.StudentServices.updateStudentFromDB(id, req.body);
+    const { student } = req.body;
+    const result = yield services_1.StudentServices.updateStudentFromDB(id, student);
     res.status(200).json({
         success: true,
         message: "Student updated successfully",
