@@ -34,6 +34,7 @@ const createStudentValidation = z.object({
       }),
       profileImage: z.string().optional(),
       admissionSemester: z.string(),
+      academicDepartment: z.string(),
     }),
   }),
 });
@@ -72,6 +73,7 @@ const updateStudentValidation = z.object({
       }),
       profileImage: z.string().optional(),
       admissionSemester: z.string().optional(),
+      academicDepartment: z.string().optional(),
     }),
   }),
 });

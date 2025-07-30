@@ -24,17 +24,6 @@ const userSchema = new Schema<TUser>(
   }
 );
 
-//check student already exist or not
-userSchema.pre("save", async function (next) {
-  const isStudentExist = await UserModel.findOne({
-    id: this.id,
-  });
-  if (isStudentExist) {
-    throw new Error("student already exist");
-  }
-  next();
-});
-
 //something change before store in database-> password bcrypt
 userSchema.pre("save", async function (next) {
   const user = this;

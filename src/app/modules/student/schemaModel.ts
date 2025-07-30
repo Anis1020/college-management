@@ -44,6 +44,11 @@ const studentSchema = new Schema<TStudent, UserModelType>(
       ref: "Semester",
       required: true,
     },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: "Department",
+      required: true,
+    },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -60,10 +65,6 @@ const studentSchema = new Schema<TStudent, UserModelType>(
 studentSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${this.name.lastName}`;
 });
-studentSchema.statics.isUserExists = async function (id: string) {
-  const existingUser = await StudentModel.findOne({ id });
-  return existingUser;
-};
 
 //skip which is update by isDeleted property
 studentSchema.pre("find", function (next) {

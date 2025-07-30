@@ -16,15 +16,15 @@ const createDepartmentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, fu
     return result;
 });
 const getAllDepartmentFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield schemaModel_1.DepartmentModel.find();
+    const result = yield schemaModel_1.DepartmentModel.find().populate("academicFaculty");
     return result;
 });
 const getSingleDepartmentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield schemaModel_1.DepartmentModel.findById(id);
+    const result = yield schemaModel_1.DepartmentModel.findById(id).populate("academicFaculty");
     return result;
 });
 const updateDepartment = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield schemaModel_1.DepartmentModel.findByIdAndUpdate(id, payload);
+    const result = yield schemaModel_1.DepartmentModel.findOneAndUpdate({ id }, payload);
     return result;
 });
 exports.DepartmentServices = {

@@ -6,15 +6,15 @@ const createDepartmentIntoDB = async (payload: TDepartment) => {
   return result;
 };
 const getAllDepartmentFromDB = async () => {
-  const result = await DepartmentModel.find();
+  const result = await DepartmentModel.find().populate("academicFaculty");
   return result;
 };
 const getSingleDepartmentFromDB = async (id: string) => {
-  const result = await DepartmentModel.findById(id);
+  const result = await DepartmentModel.findById(id).populate("academicFaculty");
   return result;
 };
 const updateDepartment = async (id: string, payload: Partial<TDepartment>) => {
-  const result = await DepartmentModel.findByIdAndUpdate(id, payload);
+  const result = await DepartmentModel.findOneAndUpdate({ id }, payload);
   return result;
 };
 

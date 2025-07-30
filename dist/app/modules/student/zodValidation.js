@@ -39,6 +39,7 @@ const createStudentValidation = zod_1.default.object({
             }),
             profileImage: zod_1.default.string().optional(),
             admissionSemester: zod_1.default.string(),
+            academicDepartment: zod_1.default.string(),
         }),
     }),
 });
@@ -76,6 +77,7 @@ const updateStudentValidation = zod_1.default.object({
             }),
             profileImage: zod_1.default.string().optional(),
             admissionSemester: zod_1.default.string().optional(),
+            academicDepartment: zod_1.default.string().optional(),
         }),
     }),
 });

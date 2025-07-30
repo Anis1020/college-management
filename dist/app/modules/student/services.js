@@ -13,12 +13,26 @@ exports.StudentServices = void 0;
 const schemaModel_1 = require("./schemaModel");
 const schemaModel_2 = require("../user/schemaModel");
 const getAllStudentsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield schemaModel_1.StudentModel.find();
+    const result = yield schemaModel_1.StudentModel.find()
+        .populate("admissionSemester")
+        .populate({
+        path: "academicDepartment",
+        populate: {
+            path: "academicFaculty",
+        },
+    });
     return result;
 });
 const getSingleStudentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    // const result = await StudentModel.findById(id);
-    const result = yield schemaModel_1.StudentModel.aggregate([{ $match: { id } }]);
+    // const result = await StudentModel.aggregate([{ $match: { id } }]);
+    const result = yield schemaModel_1.StudentModel.findById(id)
+        .populate("admissionSemester")
+        .populate({
+        path: "academicDepartment",
+        populate: {
+            path: "academicFaculty",
+        },
+    });
     return result;
 });
 const updateStudentFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {

@@ -8,9 +8,11 @@ import { generatedId } from "./utils";
 import { config } from "../../config";
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
-  // if (await StudentModel.isUserExists(payload.id)) {
-  //   throw new Error("user already exist ");
-  // }
+  //if data already exist then stop to create
+  const isUserExists = await StudentModel.findOne({ email: payload.email });
+  if (isUserExists) {
+    throw new Error("this user already exist in db");
+  }
 
   const userData: Partial<TUser> = {};
   userData.password = password || config.default_pass;

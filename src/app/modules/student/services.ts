@@ -4,13 +4,27 @@ import { StudentModel } from "./schemaModel";
 import { UserModel } from "../user/schemaModel";
 
 const getAllStudentsFromDB = async () => {
-  const result = await StudentModel.find();
+  const result = await StudentModel.find()
+    .populate("admissionSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty",
+      },
+    });
   return result;
 };
 
 const getSingleStudentFromDB = async (id: string) => {
-  // const result = await StudentModel.findById(id);
-  const result = await StudentModel.aggregate([{ $match: { id } }]);
+  // const result = await StudentModel.aggregate([{ $match: { id } }]);
+  const result = await StudentModel.findById(id)
+    .populate("admissionSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty",
+      },
+    });
   return result;
 };
 

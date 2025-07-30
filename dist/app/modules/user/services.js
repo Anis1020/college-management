@@ -20,9 +20,11 @@ const schemaModel_3 = require("../semester/schemaModel");
 const utils_1 = require("./utils");
 const config_1 = require("../../config");
 const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    // if (await StudentModel.isUserExists(payload.id)) {
-    //   throw new Error("user already exist ");
-    // }
+    //if data already exist then stop to create
+    const isUserExists = yield schemaModel_1.StudentModel.findOne({ email: payload.email });
+    if (isUserExists) {
+        throw new Error("this user already exist in db");
+    }
     const userData = {};
     userData.password = password || config_1.config.default_pass;
     userData.role = "student";
