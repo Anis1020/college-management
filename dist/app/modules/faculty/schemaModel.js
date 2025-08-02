@@ -1,23 +1,105 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
+exports.FacultyModel = void 0;
 const mongoose_1 = require("mongoose");
-const userSchema = new mongoose_1.Schema({
+const facultySchema = new mongoose_1.Schema({
     id: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    needPasswordChange: { type: Boolean, default: true },
-    role: {
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        unique: true,
+        required: true,
+        ref: "User",
+    },
+    name: {
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+    },
+    designation: {
         type: String,
-        enum: ["student", "faculty", "admin"],
         required: true,
     },
-    status: {
+    gender: {
         type: String,
-        enum: ["in-progress", "blocked"],
-        default: "in-progress",
+        enum: ["male", "female", "other"],
+        required: true,
     },
-    isDeleted: { type: Boolean, default: false },
+    dateOfBirth: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    contactNo: {
+        type: String,
+        required: true,
+    },
+    presentAddress: {
+        type: String,
+        required: true,
+    },
+    permanentAddress: {
+        type: String,
+        required: true,
+    },
+    guardian: {
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        relation: {
+            type: String,
+            required: true,
+        },
+        occupation: {
+            type: String,
+            required: true,
+        },
+    },
+    localGuardian: {
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        relation: {
+            type: String,
+            required: true,
+        },
+        occupation: {
+            type: String,
+            required: true,
+        },
+    },
+    profileImg: {
+        type: String,
+    },
+    academicFaculty: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+        ref: "AcademicFaculty",
+    },
+    academicDepartment: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+        ref: "Department",
+    },
 }, {
     timestamps: true,
 });
-exports.UserModel = (0, mongoose_1.model)("User", userSchema);
+exports.FacultyModel = (0, mongoose_1.model)("Faculty", facultySchema);

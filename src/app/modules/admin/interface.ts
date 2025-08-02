@@ -1,8 +1,19 @@
-export type TUser = {
+import { Types } from "mongoose";
+
+export type TAdmin = {
   id: string;
-  password: string;
-  needPasswordChange: boolean;
-  role: "student" | "faculty" | "admin";
-  status: "in-progress" | "blocked";
-  isDeleted: boolean;
+  user: Types.ObjectId;
+  name: string;
+  designation: string;
+  gender: "male" | "female" | "other";
+  dateOfBirth: string;
+  email: string;
+  contactNo: string;
+  presentAddress: string;
+  permanentAddress: string;
+  guardian: string;
+  localGuardian: string;
+  profileImg: string;
+  academicFaculty: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
 };

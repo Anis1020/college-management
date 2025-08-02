@@ -13,7 +13,7 @@ exports.StudentController = void 0;
 const catchAsync_1 = require("../../utils/catchAsync");
 const services_1 = require("./services");
 const getAllStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield services_1.StudentServices.getAllStudentsFromDB();
+    const result = yield services_1.StudentServices.getAllStudentsFromDB(req.query);
     res.status(200).json({
         success: true,
         message: "Students retrieved successfully",

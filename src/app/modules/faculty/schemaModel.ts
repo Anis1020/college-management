@@ -1,26 +1,108 @@
 import { model, Schema } from "mongoose";
-import { TUser } from "./interface";
+import { TFaculty } from "./interface";
 
-const userSchema = new Schema<TUser>(
+const facultySchema = new Schema<TFaculty>(
   {
     id: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    needPasswordChange: { type: Boolean, default: true },
-    role: {
+    user: {
+      type: Schema.Types.ObjectId,
+      unique: true,
+      required: true,
+      ref: "User",
+    },
+    name: {
+      firstName: {
+        type: String,
+        required: true,
+      },
+      lastName: {
+        type: String,
+        required: true,
+      },
+    },
+    designation: {
       type: String,
-      enum: ["student", "faculty", "admin"],
       required: true,
     },
-    status: {
+    gender: {
       type: String,
-      enum: ["in-progress", "blocked"],
-      default: "in-progress",
+      enum: ["male", "female", "other"],
+      required: true,
     },
-    isDeleted: { type: Boolean, default: false },
+    dateOfBirth: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    contactNo: {
+      type: String,
+      required: true,
+    },
+    presentAddress: {
+      type: String,
+      required: true,
+    },
+    permanentAddress: {
+      type: String,
+      required: true,
+    },
+    guardian: {
+      firstName: {
+        type: String,
+        required: true,
+      },
+      lastName: {
+        type: String,
+        required: true,
+      },
+      relation: {
+        type: String,
+        required: true,
+      },
+      occupation: {
+        type: String,
+        required: true,
+      },
+    },
+    localGuardian: {
+      firstName: {
+        type: String,
+        required: true,
+      },
+      lastName: {
+        type: String,
+        required: true,
+      },
+      relation: {
+        type: String,
+        required: true,
+      },
+      occupation: {
+        type: String,
+        required: true,
+      },
+    },
+    profileImg: {
+      type: String,
+    },
+    academicFaculty: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "AcademicFaculty",
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Department",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export const UserModel = model<TUser>("User", userSchema);
+export const FacultyModel = model<TFaculty>("Faculty", facultySchema);

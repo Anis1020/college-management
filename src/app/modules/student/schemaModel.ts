@@ -63,7 +63,7 @@ const studentSchema = new Schema<TStudent, UserModelType>(
 );
 //virtual
 studentSchema.virtual("fullName").get(function () {
-  return `${this.name.firstName} ${this.name.lastName}`;
+  return `${this?.name?.firstName} ${this?.name?.lastName}`;
 });
 
 //skip which is update by isDeleted property
