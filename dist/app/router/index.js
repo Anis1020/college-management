@@ -7,6 +7,7 @@ const router_3 = require("../modules/semester/router");
 const router_4 = require("../modules/academicFaculty/router");
 const router_5 = require("../modules/department/router");
 const router_6 = require("../modules/faculty/router");
+const router_7 = require("../modules/admin/router");
 const router = (0, express_1.Router)();
 const routerProvider = [
     {
@@ -32,6 +33,10 @@ const routerProvider = [
     {
         path: "/faculties",
         route: router_6.FacultyRouter,
+    },
+    {
+        path: "/admins",
+        route: router_7.AdminRouter,
     },
 ];
 routerProvider.forEach((route) => {
