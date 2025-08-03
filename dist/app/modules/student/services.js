@@ -90,7 +90,7 @@ const getAllStudentsFromDB = (query) => __awaiter(void 0, void 0, void 0, functi
 });
 const getSingleStudentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     // const result = await StudentModel.aggregate([{ $match: { id } }]);
-    const result = yield schemaModel_1.StudentModel.findOne({ id })
+    const result = yield schemaModel_1.StudentModel.findById(id)
         .populate("admissionSemester")
         .populate({
         path: "academicDepartment",
@@ -118,7 +118,7 @@ const updateStudentFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, f
             modifiedUpdatedData[`localGuardian.${key}`] = value;
         }
     }
-    const result = yield schemaModel_1.StudentModel.findOneAndUpdate({ id }, modifiedUpdatedData, {
+    const result = yield schemaModel_1.StudentModel.findByIdAndUpdate(id, modifiedUpdatedData, {
         new: true,
     });
     return result;
@@ -127,13 +127,14 @@ const deleteStudentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* 
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
-        const deletedUser = yield schemaModel_2.UserModel.findOneAndUpdate({ id }, { isDeleted: true }, { new: true, session });
-        if (!deletedUser) {
-            throw new AppError_1.default(404, "Fain to delete user");
-        }
-        const deleteStudent = yield schemaModel_1.StudentModel.findOneAndUpdate({ id }, { isDeleted: true }, { new: true, session });
+        const deleteStudent = yield schemaModel_1.StudentModel.findByIdAndUpdate(id, { isDeleted: true }, { new: true, session });
         if (!deleteStudent) {
             throw new AppError_1.default(404, "Fail to delete student");
+        }
+        const userId = deleteStudent.user;
+        const deletedUser = yield schemaModel_2.UserModel.findByIdAndUpdate(userId, { isDeleted: true }, { new: true, session });
+        if (!deletedUser) {
+            throw new AppError_1.default(404, "Fain to delete user");
         }
         yield session.commitTransaction();
         session.endSession;

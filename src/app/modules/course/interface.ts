@@ -1,8 +1,15 @@
-export type TUser = {
-  id: string;
-  password: string;
-  needPasswordChange: boolean;
-  role: "student" | "faculty" | "admin";
-  status: "in-progress" | "blocked";
+import { Types } from "mongoose";
+
+export type TPreRequisiteCourses = {
+  course: Types.ObjectId;
+  isDeleted: boolean;
+};
+
+export type TCourse = {
+  title: string;
+  prefix: string;
+  code: number;
+  credits: number;
+  preRequisiteCourses: [];
   isDeleted: boolean;
 };

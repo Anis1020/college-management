@@ -1,21 +1,39 @@
 import { model, Schema } from "mongoose";
-import { TUser } from "./interface";
+import { TCourse, TPreRequisiteCourses } from "./interface";
 
-const userSchema = new Schema<TUser>(
+const preRequisiteCoursesSchema = new Schema<TPreRequisiteCourses>({
+  course: {
+    type: Schema.Types.ObjectId,
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+});
+const courseSchema = new Schema<TCourse>(
   {
-    id: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    needPasswordChange: { type: Boolean, default: true },
-    role: {
+    title: {
       type: String,
-      enum: ["student", "faculty", "admin"],
+      unique: true,
+      trim: true,
       required: true,
     },
-    status: {
+    prefix: {
       type: String,
-      enum: ["in-progress", "blocked"],
-      default: "in-progress",
+      required: true,
+      trim: true,
     },
+    code: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
+    credits: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
+    preRequisiteCourses: [preRequisiteCoursesSchema],
     isDeleted: { type: Boolean, default: false },
   },
   {
@@ -23,4 +41,4 @@ const userSchema = new Schema<TUser>(
   }
 );
 
-export const UserModel = model<TUser>("User", userSchema);
+export const CourseModel = model<TCourse>("Course", courseSchema);

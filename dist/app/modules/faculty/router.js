@@ -6,6 +6,6 @@ const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.get("/", controller_1.FacultyController.getAllFaculty);
 router.get("/:id", controller_1.FacultyController.getSingleFaculty);
-router.get("/:id", controller_1.FacultyController.updateFaculty);
-router.get("/:id", controller_1.FacultyController.deleteFaculty);
+router.patch("/:id", controller_1.FacultyController.updateFaculty);
+router.delete("/:id", controller_1.FacultyController.deleteFaculty);
 exports.FacultyRouter = router;

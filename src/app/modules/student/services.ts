@@ -69,7 +69,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
 
 const getSingleStudentFromDB = async (id: string) => {
   // const result = await StudentModel.aggregate([{ $match: { id } }]);
-  const result = await StudentModel.findOne({ id })
+  const result = await StudentModel.findById(id)
     .populate("admissionSemester")
     .populate({
       path: "academicDepartment",
@@ -103,13 +103,9 @@ const updateStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
       modifiedUpdatedData[`localGuardian.${key}`] = value;
     }
   }
-  const result = await StudentModel.findOneAndUpdate(
-    { id },
-    modifiedUpdatedData,
-    {
-      new: true,
-    }
-  );
+  const result = await StudentModel.findByIdAndUpdate(id, modifiedUpdatedData, {
+    new: true,
+  });
   return result;
 };
 
@@ -117,22 +113,26 @@ const deleteStudentFromDB = async (id: string) => {
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
-    const deletedUser = await UserModel.findOneAndUpdate(
-      { id },
-      { isDeleted: true },
-      { new: true, session }
-    );
-    if (!deletedUser) {
-      throw new AppError(404, "Fain to delete user");
-    }
-    const deleteStudent = await StudentModel.findOneAndUpdate(
-      { id },
+
+    const deleteStudent = await StudentModel.findByIdAndUpdate(
+      id,
       { isDeleted: true },
       { new: true, session }
     );
     if (!deleteStudent) {
       throw new AppError(404, "Fail to delete student");
     }
+    const userId = deleteStudent.user;
+
+    const deletedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { isDeleted: true },
+      { new: true, session }
+    );
+    if (!deletedUser) {
+      throw new AppError(404, "Fain to delete user");
+    }
+
     await session.commitTransaction();
     session.endSession;
     return {

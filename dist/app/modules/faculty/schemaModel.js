@@ -99,6 +99,10 @@ const facultySchema = new mongoose_1.Schema({
         required: true,
         ref: "Department",
     },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
 }, {
     timestamps: true,
 });

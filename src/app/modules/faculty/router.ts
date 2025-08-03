@@ -5,6 +5,6 @@ const router = Router();
 
 router.get("/", FacultyController.getAllFaculty);
 router.get("/:id", FacultyController.getSingleFaculty);
-router.get("/:id", FacultyController.updateFaculty);
-router.get("/:id", FacultyController.deleteFaculty);
+router.patch("/:id", FacultyController.updateFaculty);
+router.delete("/:id", FacultyController.deleteFaculty);
 export const FacultyRouter = router;

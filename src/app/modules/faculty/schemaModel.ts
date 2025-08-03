@@ -99,6 +99,10 @@ const facultySchema = new Schema<TFaculty>(
       required: true,
       ref: "Department",
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
