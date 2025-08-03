@@ -1,23 +1,82 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
+exports.AdminModel = void 0;
 const mongoose_1 = require("mongoose");
-const userSchema = new mongoose_1.Schema({
-    id: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    needPasswordChange: { type: Boolean, default: true },
-    role: {
+const NameSchema = {
+    firstName: {
         type: String,
-        enum: ["student", "faculty", "admin"],
         required: true,
     },
-    status: {
+    lastName: {
         type: String,
-        enum: ["in-progress", "blocked"],
-        default: "in-progress",
+        required: true,
+    },
+};
+const Guardians = {
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    occupation: {
+        type: String,
+        required: true,
+    },
+    relation: {
+        type: String,
+        required: true,
+    },
+};
+const adminSchema = new mongoose_1.Schema({
+    id: { type: String, required: true, unique: true },
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+    },
+    name: NameSchema,
+    designation: {
+        type: String,
+        required: true,
+    },
+    gender: {
+        type: String,
+        enum: ["male", "female", "other"],
+        required: true,
+    },
+    dateOfBirth: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        unique: true,
+    },
+    contactNo: {
+        type: String,
+        required: true,
+    },
+    presentAddress: {
+        type: String,
+        required: true,
+    },
+    permanentAddress: {
+        type: String,
+        required: true,
+    },
+    guardian: Guardians,
+    localGuardian: Guardians,
+    profileImg: {
+        type: String,
+    },
+    managementDepartment: {
+        type: String,
+        required: true,
     },
     isDeleted: { type: Boolean, default: false },
 }, {
     timestamps: true,
 });
-exports.UserModel = (0, mongoose_1.model)("User", userSchema);
+exports.AdminModel = (0, mongoose_1.model)("Admin", adminSchema);

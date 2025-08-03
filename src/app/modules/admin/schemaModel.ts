@@ -1,20 +1,79 @@
 import { model, Schema } from "mongoose";
-import { TUser } from "./interface";
+import { TAdmin } from "./interface";
+const NameSchema = {
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+};
 
-const userSchema = new Schema<TUser>(
+const Guardians = {
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  occupation: {
+    type: String,
+    required: true,
+  },
+  relation: {
+    type: String,
+    required: true,
+  },
+};
+const adminSchema = new Schema<TAdmin>(
   {
     id: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    needPasswordChange: { type: Boolean, default: true },
-    role: {
-      type: String,
-      enum: ["student", "faculty", "admin"],
+    user: {
+      type: Schema.Types.ObjectId,
       required: true,
     },
-    status: {
+    name: NameSchema,
+    designation: {
       type: String,
-      enum: ["in-progress", "blocked"],
-      default: "in-progress",
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: ["male", "female", "other"],
+      required: true,
+    },
+    dateOfBirth: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+    },
+    contactNo: {
+      type: String,
+      required: true,
+    },
+    presentAddress: {
+      type: String,
+      required: true,
+    },
+    permanentAddress: {
+      type: String,
+      required: true,
+    },
+    guardian: Guardians,
+    localGuardian: Guardians,
+    profileImg: {
+      type: String,
+    },
+    managementDepartment: {
+      type: String,
+      required: true,
     },
     isDeleted: { type: Boolean, default: false },
   },
@@ -23,4 +82,4 @@ const userSchema = new Schema<TUser>(
   }
 );
 
-export const UserModel = model<TUser>("User", userSchema);
+export const AdminModel = model<TAdmin>("Admin", adminSchema);

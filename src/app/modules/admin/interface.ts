@@ -13,7 +13,7 @@ export type TAdmin = {
   permanentAddress: string;
   guardian: string;
   localGuardian: string;
-  profileImg: string;
-  academicFaculty: Types.ObjectId;
-  academicDepartment: Types.ObjectId;
+  profileImg?: string;
+  managementDepartment: string;
+  isDeleted: boolean;
 };

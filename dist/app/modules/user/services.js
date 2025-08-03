@@ -21,6 +21,7 @@ const utils_1 = require("./utils");
 const config_1 = require("../../config");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const schemaModel_4 = require("../faculty/schemaModel");
+const schemaModel_5 = require("../admin/schemaModel");
 const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
     //if data already exist then stop to create
     const isUserExists = yield schemaModel_1.StudentModel.findOne({ email: payload.email });
@@ -86,7 +87,34 @@ const createFacultyIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
         throw new Error(error.message);
     }
 });
+//create admin
+const createAdminIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const userData = {};
+    userData.password = password || config_1.config.default_pass;
+    userData.role = "admin";
+    userData.id = yield (0, utils_1.generatedAdminId)();
+    const session = yield mongoose_1.default.startSession();
+    try {
+        session.startTransaction();
+        const newUser = yield schemaModel_2.UserModel.create([userData], { session });
+        if (!newUser.length) {
+            throw new Error("fail to create user");
+        }
+        payload.id = newUser[0].id;
+        payload.user = newUser[0]._id;
+        const newAdmin = yield schemaModel_5.AdminModel.create([payload], { session });
+        yield session.commitTransaction();
+        yield session.endSession();
+        return newAdmin;
+    }
+    catch (error) {
+        yield session.abortTransaction();
+        yield session.endSession();
+        throw new Error(error.massage);
+    }
+});
 exports.UserServices = {
     createStudentIntoDB,
     createFacultyIntoDB,
+    createAdminIntoDB,
 };

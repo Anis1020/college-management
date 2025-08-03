@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generatedFacultyId = exports.generatedId = void 0;
+exports.generatedAdminId = exports.generatedFacultyId = exports.generatedId = void 0;
 const schemaModel_1 = require("./schemaModel");
 const findLastStudent = () => __awaiter(void 0, void 0, void 0, function* () {
     const lastStudentId = yield schemaModel_1.UserModel.findOne({
@@ -60,3 +60,23 @@ const generatedFacultyId = () => __awaiter(void 0, void 0, void 0, function* () 
     return `F-${incrementId.padStart(4, "0")}`;
 });
 exports.generatedFacultyId = generatedFacultyId;
+//generate admin id
+const findLastAdmin = () => __awaiter(void 0, void 0, void 0, function* () {
+    const lastAdminId = yield schemaModel_1.UserModel.findOne({ role: "admin" }, {
+        id: 1,
+        _id: 0,
+    }).sort({ createdAt: -1 });
+    return (lastAdminId === null || lastAdminId === void 0 ? void 0 : lastAdminId.id) ? lastAdminId === null || lastAdminId === void 0 ? void 0 : lastAdminId.id : undefined;
+});
+const generatedAdminId = () => __awaiter(void 0, void 0, void 0, function* () {
+    let currentAdminId = (0).toString();
+    const lastAdminId = yield findLastAdmin();
+    if (lastAdminId) {
+        currentAdminId = lastAdminId.substring(2);
+    }
+    const incrementAdminId = (Number(currentAdminId) + 1)
+        .toString()
+        .padStart(4, "0");
+    return `A-${incrementAdminId}`;
+});
+exports.generatedAdminId = generatedAdminId;

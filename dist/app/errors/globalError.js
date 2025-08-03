@@ -9,7 +9,7 @@ const globalErrorHandler = (err, req, res, next) => {
     let errorSources = [
         {
             path: "",
-            message: "something went wrong",
+            message: err.message || "something went wrong",
         },
     ];
     if (err instanceof zod_1.ZodError) {

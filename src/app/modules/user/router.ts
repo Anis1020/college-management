@@ -11,4 +11,5 @@ router.post(
   UserController.createStudent
 );
 router.post("/create-faculty", UserController.createFaculty);
+router.post("/create-admin", UserController.createAdmin);
 export const UserRouter = router;
