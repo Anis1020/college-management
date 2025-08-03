@@ -20,6 +20,7 @@ const schemaModel_3 = require("../semester/schemaModel");
 const utils_1 = require("./utils");
 const config_1 = require("../../config");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
+const schemaModel_4 = require("../faculty/schemaModel");
 const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
     //if data already exist then stop to create
     const isUserExists = yield schemaModel_1.StudentModel.findOne({ email: payload.email });
@@ -47,7 +48,7 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
         // payload.email = newUser.email;
         const result = yield schemaModel_1.StudentModel.create([payload], { session });
         if (!result.length) {
-            throw new AppError_1.default(404, "fail to create user");
+            throw new AppError_1.default(404, "fail to create student");
         }
         yield session.commitTransaction();
         yield session.endSession();
@@ -59,6 +60,33 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
         throw new Error("Failed to create user and student");
     }
 });
+//create faculty
+const createFacultyIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const UserData = {};
+    UserData.role = "faculty";
+    UserData.password = password || config_1.config.default_pass;
+    UserData.id = yield (0, utils_1.generatedFacultyId)();
+    const session = yield mongoose_1.default.startSession();
+    try {
+        session.startTransaction();
+        const newUser = yield schemaModel_2.UserModel.create([UserData], { session });
+        if (!newUser.length) {
+            throw new Error("fail to create user");
+        }
+        payload.id = newUser[0].id;
+        payload.user = newUser[0]._id;
+        const result = yield schemaModel_4.FacultyModel.create([payload], { session });
+        yield session.commitTransaction();
+        yield session.endSession();
+        return result;
+    }
+    catch (error) {
+        yield session.abortTransaction();
+        yield session.endSession();
+        throw new Error(error.message);
+    }
+});
 exports.UserServices = {
     createStudentIntoDB,
+    createFacultyIntoDB,
 };

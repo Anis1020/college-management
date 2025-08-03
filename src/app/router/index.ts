@@ -4,6 +4,7 @@ import { StudentRouter } from "../modules/student/router";
 import { SemesterRouter } from "../modules/semester/router";
 import { AcademicFacultyRouter } from "../modules/academicFaculty/router";
 import { DepartmentRouter } from "../modules/department/router";
+import { FacultyRouter } from "../modules/faculty/router";
 
 const router = Router();
 const routerProvider = [
@@ -26,6 +27,10 @@ const routerProvider = [
   {
     path: "/departments",
     route: DepartmentRouter,
+  },
+  {
+    path: "/faculties",
+    route: FacultyRouter,
   },
 ];
 routerProvider.forEach((route) => {

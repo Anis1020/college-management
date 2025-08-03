@@ -38,3 +38,30 @@ export const generatedId = async (payload: TSemester) => {
     "0"
   )}`;
 };
+
+//faculty id generate
+const findLastFaculty = async () => {
+  const lastFacultyId = await UserModel.findOne(
+    {
+      role: "faculty",
+    },
+    {
+      id: 1,
+      _id: 0,
+    }
+  ).sort({
+    createdAt: -1,
+  });
+  return lastFacultyId?.id ? lastFacultyId.id : undefined;
+};
+
+export const generatedFacultyId = async () => {
+  let currentId = (0).toString();
+
+  const lastFacultyId = await findLastFaculty();
+  if (lastFacultyId) {
+    currentId = lastFacultyId.substring(2);
+  }
+  const incrementId = (Number(currentId) + 1).toString();
+  return `F-${incrementId.padStart(4, "0")}`;
+};

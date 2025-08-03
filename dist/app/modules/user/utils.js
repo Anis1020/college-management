@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generatedId = void 0;
+exports.generatedFacultyId = exports.generatedId = void 0;
 const schemaModel_1 = require("./schemaModel");
 const findLastStudent = () => __awaiter(void 0, void 0, void 0, function* () {
     const lastStudentId = yield schemaModel_1.UserModel.findOne({
@@ -38,3 +38,25 @@ const generatedId = (payload) => __awaiter(void 0, void 0, void 0, function* () 
     return `${currentSemesterYear}${currentSemesterCode}${incrementId.padStart(4, "0")}`;
 });
 exports.generatedId = generatedId;
+//faculty id generate
+const findLastFaculty = () => __awaiter(void 0, void 0, void 0, function* () {
+    const lastFacultyId = yield schemaModel_1.UserModel.findOne({
+        role: "faculty",
+    }, {
+        id: 1,
+        _id: 0,
+    }).sort({
+        createdAt: -1,
+    });
+    return (lastFacultyId === null || lastFacultyId === void 0 ? void 0 : lastFacultyId.id) ? lastFacultyId.id : undefined;
+});
+const generatedFacultyId = () => __awaiter(void 0, void 0, void 0, function* () {
+    let currentId = (0).toString();
+    const lastFacultyId = yield findLastFaculty();
+    if (lastFacultyId) {
+        currentId = lastFacultyId.substring(2);
+    }
+    const incrementId = (Number(currentId) + 1).toString();
+    return `F-${incrementId.padStart(4, "0")}`;
+});
+exports.generatedFacultyId = generatedFacultyId;
