@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SemesterRegistration = void 0;
+exports.SemesterRegistrationModel = void 0;
 const mongoose_1 = require("mongoose");
 const semesterRegistrationSchema = new mongoose_1.Schema({
     academicSemester: {
@@ -24,11 +24,13 @@ const semesterRegistrationSchema = new mongoose_1.Schema({
     },
     minCredit: {
         type: Number,
-        required: true,
+        default: 3,
     },
     maxCredit: {
         type: Number,
-        required: true,
+        default: 15,
     },
+}, {
+    timestamps: true,
 });
-exports.SemesterRegistration = (0, mongoose_1.model)("SemesterRegistration", semesterRegistrationSchema);
+exports.SemesterRegistrationModel = (0, mongoose_1.model)("SemesterRegistration", semesterRegistrationSchema);

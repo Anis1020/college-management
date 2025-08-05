@@ -21,10 +21,10 @@ const createSemesterRegistration = (0, catchAsync_1.catchAsync)((req, res) => __
     });
 }));
 const getAllSemesterRegistration = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield services_1.SemesterRegistrationServices.getAllSemesterRegistrationIntoD();
+    const result = yield services_1.SemesterRegistrationServices.getAllSemesterRegistrationIntoD(req.query);
     res.status(200).json({
         success: true,
-        message: "get single semester registration  successfully",
+        message: "get all semester registration  successfully",
         data: result,
     });
 }));
@@ -39,7 +39,7 @@ const getSingleSemesterRegistration = (0, catchAsync_1.catchAsync)((req, res) =>
 }));
 const updateSemesterRegistration = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield services_1.SemesterRegistrationServices.updateSemesterRegistrationIntoD(id);
+    const result = yield services_1.SemesterRegistrationServices.updateSemesterRegistrationIntoD(id, req.body);
     res.status(200).json({
         success: true,
         message: "semester registration update successfully",
