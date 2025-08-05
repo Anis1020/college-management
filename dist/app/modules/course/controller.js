@@ -21,7 +21,7 @@ const createCourse = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0
     });
 }));
 const getAllCourses = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield services_1.CourseServices.getAllCoursesFromDB();
+    const result = yield services_1.CourseServices.getAllCoursesFromDB(req.query);
     res.status(200).json({
         success: true,
         message: "get all course successfully",
@@ -37,6 +37,15 @@ const getSingleCourse = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(voi
         data: result,
     });
 }));
+const updateCourse = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield services_1.CourseServices.updateCourseFromDB(id, req.body);
+    res.status(200).json({
+        success: true,
+        message: " course update successfully",
+        data: result,
+    });
+}));
 const deleteCourse = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield services_1.CourseServices.deleteCourseFromDB(id);
@@ -46,9 +55,32 @@ const deleteCourse = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0
         data: result,
     });
 }));
+const assignFacultiesInCourse = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { courseId } = req.params;
+    const { faculties } = req.body;
+    const result = yield services_1.CourseServices.assignFacultiesInCourseIntoDB(courseId, faculties);
+    res.status(200).json({
+        success: true,
+        message: " course faculties assign successfully",
+        data: result,
+    });
+}));
+const removeFacultiesFromCourse = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { courseId } = req.params;
+    const { faculties } = req.body;
+    const result = yield services_1.CourseServices.removeFacultiesFromCourseFromDB(courseId, faculties);
+    res.status(200).json({
+        success: true,
+        message: " course faculties remove successfully",
+        data: result,
+    });
+}));
 exports.CourseController = {
     createCourse,
     getAllCourses,
     getSingleCourse,
+    updateCourse,
     deleteCourse,
+    assignFacultiesInCourse,
+    removeFacultiesFromCourse,
 };
