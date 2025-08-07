@@ -30,4 +30,5 @@ router.delete(
   "/:courseId/remove-faculties",
   CourseController.removeFacultiesFromCourse
 );
+
 export const CourseRouter = router;

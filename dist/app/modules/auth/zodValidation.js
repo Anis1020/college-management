@@ -22,8 +22,21 @@ const refreshTokenValidationSchema = zod_1.default.object({
         refreshToken: zod_1.default.string({ message: "Refresh token is required" }),
     }),
 });
+const forgetPassValidationSchema = zod_1.default.object({
+    body: zod_1.default.object({
+        id: zod_1.default.string({ message: "ID is need to change pass" }),
+    }),
+});
+const resetPassValidationSchema = zod_1.default.object({
+    body: zod_1.default.object({
+        id: zod_1.default.string({ message: "ID is need to change pass" }),
+        newPassword: zod_1.default.string({ message: "new pass is need to change pass" }),
+    }),
+});
 exports.AuthValidation = {
     loginValidationSchema,
     changePassValidationSchema,
     refreshTokenValidationSchema,
+    forgetPassValidationSchema,
+    resetPassValidationSchema,
 };

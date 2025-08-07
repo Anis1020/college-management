@@ -4,6 +4,7 @@ import { boolean } from "zod";
 
 export interface TUser {
   id: string;
+  email: string;
   password: string;
   needPasswordChange: boolean;
   passwordChangeAt?: Date;

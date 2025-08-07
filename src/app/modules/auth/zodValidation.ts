@@ -17,9 +17,22 @@ const refreshTokenValidationSchema = z.object({
     refreshToken: z.string({ message: "Refresh token is required" }),
   }),
 });
+const forgetPassValidationSchema = z.object({
+  body: z.object({
+    id: z.string({ message: "ID is need to change pass" }),
+  }),
+});
+const resetPassValidationSchema = z.object({
+  body: z.object({
+    id: z.string({ message: "ID is need to change pass" }),
+    newPassword: z.string({ message: "new pass is need to change pass" }),
+  }),
+});
 
 export const AuthValidation = {
   loginValidationSchema,
   changePassValidationSchema,
   refreshTokenValidationSchema,
+  forgetPassValidationSchema,
+  resetPassValidationSchema,
 };

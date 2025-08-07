@@ -23,4 +23,14 @@ router.post(
   // authValidation(USER_ROLE.admin),
   UserController.createAdmin
 );
+router.get(
+  "/me",
+  authValidation(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
+  UserController.getMe
+);
+router.get(
+  "/change-status/:id",
+  authValidation(USER_ROLE.admin),
+  UserController.changeStatus
+);
 export const UserRouter = router;

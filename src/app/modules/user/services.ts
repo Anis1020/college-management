@@ -11,6 +11,7 @@ import { TFaculty } from "../faculty/interface";
 import { FacultyModel } from "../faculty/schemaModel";
 import { TAdmin } from "../admin/interface";
 import { AdminModel } from "../admin/schemaModel";
+import { verifyToken } from "../auth/utils";
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   //if data already exist then stop to create
@@ -22,6 +23,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   const userData: Partial<TUser> = {};
   userData.password = password || config.default_pass;
   userData.role = "student";
+  userData.email = payload.email;
 
   const admissionSemester = await SemesterModel.findById(
     payload.admissionSemester
@@ -62,6 +64,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   const UserData: Partial<TUser> = {};
   UserData.role = "faculty";
+  UserData.email = payload.email;
   UserData.password = password || config.default_pass;
   UserData.id = await generatedFacultyId();
 
@@ -90,6 +93,7 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   const userData: Partial<TUser> = {};
   userData.password = password || config.default_pass;
   userData.role = "admin";
+  userData.email = payload.email;
   userData.id = await generatedAdminId();
 
   const session = await mongoose.startSession();
@@ -111,9 +115,29 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
     throw new Error(error.massage);
   }
 };
+const getMe = async (userId: string, role: string) => {
+  let result = null;
+  if (role === "student") {
+    result = await StudentModel.findOne({ id: userId }).populate("user");
+  }
+  if (role === "faculty") {
+    result = await FacultyModel.findOne({ id: userId }).populate("user");
+  }
+  if (role === "admin") {
+    result = await AdminModel.findOne({ id: userId }).populate("user");
+  }
+  return result;
+};
+
+const changeStatus = async (id: string) => {
+  const result = await UserModel.findById(id);
+  return result;
+};
 
 export const UserServices = {
   createStudentIntoDB,
   createFacultyIntoDB,
   createAdminIntoDB,
+  getMe,
+  changeStatus,
 };

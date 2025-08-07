@@ -31,6 +31,7 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
     const userData = {};
     userData.password = password || config_1.config.default_pass;
     userData.role = "student";
+    userData.email = payload.email;
     const admissionSemester = yield schemaModel_3.SemesterModel.findById(payload.admissionSemester);
     if (!admissionSemester) {
         throw new Error("Admission semester not found");
@@ -65,6 +66,7 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
 const createFacultyIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const UserData = {};
     UserData.role = "faculty";
+    UserData.email = payload.email;
     UserData.password = password || config_1.config.default_pass;
     UserData.id = yield (0, utils_1.generatedFacultyId)();
     const session = yield mongoose_1.default.startSession();
@@ -92,6 +94,7 @@ const createAdminIntoDB = (password, payload) => __awaiter(void 0, void 0, void 
     const userData = {};
     userData.password = password || config_1.config.default_pass;
     userData.role = "admin";
+    userData.email = payload.email;
     userData.id = yield (0, utils_1.generatedAdminId)();
     const session = yield mongoose_1.default.startSession();
     try {
@@ -113,8 +116,27 @@ const createAdminIntoDB = (password, payload) => __awaiter(void 0, void 0, void 
         throw new Error(error.massage);
     }
 });
+const getMe = (userId, role) => __awaiter(void 0, void 0, void 0, function* () {
+    let result = null;
+    if (role === "student") {
+        result = yield schemaModel_1.StudentModel.findOne({ id: userId }).populate("user");
+    }
+    if (role === "faculty") {
+        result = yield schemaModel_4.FacultyModel.findOne({ id: userId }).populate("user");
+    }
+    if (role === "admin") {
+        result = yield schemaModel_5.AdminModel.findOne({ id: userId }).populate("user");
+    }
+    return result;
+});
+const changeStatus = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield schemaModel_2.UserModel.findById(id);
+    return result;
+});
 exports.UserServices = {
     createStudentIntoDB,
     createFacultyIntoDB,
     createAdminIntoDB,
+    getMe,
+    changeStatus,
 };
