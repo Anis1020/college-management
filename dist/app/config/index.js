@@ -14,4 +14,6 @@ exports.config = {
     jwtSecret: process.env.JWT_SECRET,
     bcrypt_salt: process.env.BCRYPT_SALT,
     default_pass: process.env.DEFAULT_PASS,
+    jwt_access_secret: process.env.JWT_ACCESS_SECRET,
+    jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
 };

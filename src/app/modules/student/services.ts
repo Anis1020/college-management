@@ -24,6 +24,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   // excludeField.forEach((el) => delete queryOBJ[el]);
   // const filterQuery = searchQuery
   //   .find(queryOBJ)
+  //    .populate("user")
   //   .populate("admissionSemester")
   //   .populate({
   //     path: "academicDepartment",

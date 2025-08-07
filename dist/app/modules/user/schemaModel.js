@@ -17,8 +17,11 @@ const mongoose_1 = require("mongoose");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const userSchema = new mongoose_1.Schema({
     id: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: 0 },
     needPasswordChange: { type: Boolean, default: true },
+    passwordChangeAt: {
+        type: Date,
+    },
     role: {
         type: String,
         enum: ["student", "faculty", "admin"],
@@ -41,4 +44,20 @@ userSchema.pre("save", function (next) {
         next();
     });
 });
+userSchema.statics.isUserExistsByCustomId = function (id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield exports.UserModel.findOne({ id }).select("+password");
+    });
+};
+userSchema.statics.isUserPasswordMatch = function (plainTextPass, hashPass) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield bcryptjs_1.default.compare(plainTextPass, hashPass);
+    });
+};
+userSchema.statics.isJWTIssuedBeforePassChange = function (passChangedTimestamp, jwtIssuedTimestamp) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const passChangedTime = new Date(passChangedTimestamp).getTime() / 1000;
+        return passChangedTime > jwtIssuedTimestamp;
+    });
+};
 exports.UserModel = (0, mongoose_1.model)("User", userSchema);

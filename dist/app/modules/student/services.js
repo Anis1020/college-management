@@ -48,6 +48,7 @@ const getAllStudentsFromDB = (query) => __awaiter(void 0, void 0, void 0, functi
     // excludeField.forEach((el) => delete queryOBJ[el]);
     // const filterQuery = searchQuery
     //   .find(queryOBJ)
+    //    .populate("user")
     //   .populate("admissionSemester")
     //   .populate({
     //     path: "academicDepartment",
