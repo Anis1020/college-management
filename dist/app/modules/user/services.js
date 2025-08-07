@@ -129,8 +129,8 @@ const getMe = (userId, role) => __awaiter(void 0, void 0, void 0, function* () {
     }
     return result;
 });
-const changeStatus = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield schemaModel_2.UserModel.findById(id);
+const changeStatus = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield schemaModel_2.UserModel.findByIdAndUpdate(id, { payload }, { new: true });
     return result;
 });
 exports.UserServices = {

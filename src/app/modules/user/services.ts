@@ -129,8 +129,12 @@ const getMe = async (userId: string, role: string) => {
   return result;
 };
 
-const changeStatus = async (id: string) => {
-  const result = await UserModel.findById(id);
+const changeStatus = async (id: string, payload: { status: string }) => {
+  const result = await UserModel.findByIdAndUpdate(
+    id,
+    { payload },
+    { new: true }
+  );
   return result;
 };
 

@@ -17,5 +17,5 @@ router.post("/create-admin",
 // authValidation(USER_ROLE.admin),
 controller_1.UserController.createAdmin);
 router.get("/me", (0, authValidation_1.default)(constant_1.USER_ROLE.admin, constant_1.USER_ROLE.faculty, constant_1.USER_ROLE.student), controller_1.UserController.getMe);
-router.get("/change-status/:id", (0, authValidation_1.default)(constant_1.USER_ROLE.admin), controller_1.UserController.changeStatus);
+router.patch("/change-status/:id", (0, authValidation_1.default)(constant_1.USER_ROLE.admin), controller_1.UserController.changeStatus);
 exports.UserRouter = router;

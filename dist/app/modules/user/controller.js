@@ -50,7 +50,7 @@ const getMe = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 
 }));
 const changeStatus = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield services_1.UserServices.changeStatus(id);
+    const result = yield services_1.UserServices.changeStatus(id, req.body);
     res.status(200).json({
         success: true,
         message: "User Status is update successfully",

@@ -28,7 +28,7 @@ router.get(
   authValidation(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
   UserController.getMe
 );
-router.get(
+router.patch(
   "/change-status/:id",
   authValidation(USER_ROLE.admin),
   UserController.changeStatus

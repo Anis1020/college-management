@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModel = void 0;
 const mongoose_1 = require("mongoose");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const constant_1 = require("./constant");
 const userSchema = new mongoose_1.Schema({
     id: { type: String, required: true, unique: true },
     email: {
@@ -34,7 +35,7 @@ const userSchema = new mongoose_1.Schema({
     },
     status: {
         type: String,
-        enum: ["in-progress", "blocked"],
+        enum: constant_1.UserStatus,
         default: "in-progress",
     },
     isDeleted: { type: Boolean, default: false },
