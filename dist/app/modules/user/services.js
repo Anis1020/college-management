@@ -41,6 +41,7 @@ const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
+        //upload image to cloudinary
         const newUser = yield schemaModel_2.UserModel.create([userData], { session });
         if (!newUser.length) {
             throw new AppError_1.default(404, "fail to create user");

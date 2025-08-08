@@ -6,7 +6,6 @@ import { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { createToken, verifyToken } from "./utils";
 import jwt from "jsonwebtoken";
-import { sendEmail } from "../../utils/sendEmail";
 
 const loginUser = async (payload: TLoginUser) => {
   //check if the user is exist

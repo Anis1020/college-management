@@ -8,21 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const app_1 = __importDefault(require("./app"));
-const config_1 = require("./app/config");
-const superAdmin_1 = __importDefault(require("./app/superAdmin"));
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield mongoose_1.default.connect(config_1.config.dbUrl);
-        (0, superAdmin_1.default)();
-        app_1.default.listen(config_1.config.port, () => {
-            console.log(`Server is running on port ${config_1.config.port}`);
-        });
-    });
-}
-main();
+const schemaModel_1 = require("../modules/user/schemaModel");
+const superUser = {
+    id: "0001",
+    email: "herpowerbd@gmail.com",
+    password: "superAdmin",
+    needPasswordChange: false,
+    role: "super-admin",
+    status: "in-progress",
+    isDeleted: false,
+};
+const seedSuperAdmin = () => __awaiter(void 0, void 0, void 0, function* () {
+    const isAdminExist = yield schemaModel_1.UserModel.findOne({ role: "super-admin" });
+    if (!isAdminExist) {
+        yield schemaModel_1.UserModel.create(superUser);
+    }
+});
+exports.default = seedSuperAdmin;

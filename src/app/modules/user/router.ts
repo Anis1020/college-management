@@ -9,13 +9,13 @@ const router = Router();
 
 router.post(
   "/create-student",
-  authValidation(USER_ROLE.admin),
+  // authValidation(USER_ROLE.admin),
   validateRequest(StudentValidations.createStudentValidation),
   UserController.createStudent
 );
 router.post(
   "/create-faculty",
-  authValidation(USER_ROLE.admin),
+  // authValidation(USER_ROLE.admin),
   UserController.createFaculty
 );
 router.post(
@@ -25,7 +25,7 @@ router.post(
 );
 router.get(
   "/me",
-  authValidation(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
+  // authValidation(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
   UserController.getMe
 );
 router.patch(

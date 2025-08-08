@@ -73,11 +73,8 @@ const createOfferedCourseIntoDB = (payload) => __awaiter(void 0, void 0, void 0,
     if ((0, utils_1.timeConflict)(assignedSchedules, newSchedules)) {
         throw new AppError_1.default(400, `this faculty is not available at this time choose other time or day`);
     }
-    // const result = await OfferedCourseModel.create({
-    //   ...payload,
-    //   academicSemester,
-    // });
-    return null;
+    const result = yield schemaModel_6.OfferedCourseModel.create(Object.assign(Object.assign({}, payload), { academicSemester }));
+    return result;
 });
 const getAllOfferedCourseIntoDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield schemaModel_6.OfferedCourseModel.find();

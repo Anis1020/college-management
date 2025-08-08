@@ -8,7 +8,7 @@ import { USER_ROLE } from "../user/constant";
 const router = Router();
 router.post(
   "/login",
-  validateRequest(AuthValidation.loginValidationSchema),
+  // validateRequest(AuthValidation.loginValidationSchema),
   AuthController.loginUser
 );
 router.post(

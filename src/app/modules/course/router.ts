@@ -7,19 +7,19 @@ const router = Router();
 
 router.post(
   "/create-course",
-  authValidation(USER_ROLE.admin),
+  // authValidation(USER_ROLE.admin),
   CourseController.createCourse
 );
 router.get("/", CourseController.getAllCourses);
 router.get("/:id", CourseController.getSingleCourse);
 router.patch(
   "/:id",
-  authValidation(USER_ROLE.admin),
+  // authValidation(USER_ROLE.admin),
   CourseController.updateCourse
 );
 router.delete(
   "/:id",
-  authValidation(USER_ROLE.admin),
+  // authValidation(USER_ROLE.admin),
   CourseController.deleteCourse
 );
 router.put(

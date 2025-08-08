@@ -39,6 +39,8 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   try {
     session.startTransaction();
 
+    //upload image to cloudinary
+
     const newUser = await UserModel.create([userData], { session });
     if (!newUser.length) {
       throw new AppError(404, "fail to create user");

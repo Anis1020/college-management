@@ -92,11 +92,11 @@ const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
     );
   }
 
-  // const result = await OfferedCourseModel.create({
-  //   ...payload,
-  //   academicSemester,
-  // });
-  return null;
+  const result = await OfferedCourseModel.create({
+    ...payload,
+    academicSemester,
+  });
+  return result;
 };
 
 const getAllOfferedCourseIntoDB = async () => {
